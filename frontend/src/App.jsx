@@ -4,6 +4,7 @@ import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import AddReportsPage from './pages/AddReportsPage';
 import ViewSingleReportPage from './pages/ViewSingleReportPage';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path='/add-reports' element={<AddReportsPage />} />
             <Route path="/reports/:id" element={<ViewSingleReportPage />} />
           </Routes>
+          <Footer/>
         </div>
       </BrowserRouter>
     </div>

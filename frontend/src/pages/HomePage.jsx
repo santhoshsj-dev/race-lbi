@@ -9,7 +9,7 @@ function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    axios.get(import.meta.env.VITE_BACKEND_URL+`api/reports`)
+    axios.get(import.meta.env.VITE_BACKEND_URL + `api/reports`)
       .then(res => {
         setReports(res.data);
         setLoading(false);
@@ -49,7 +49,11 @@ function HomePage() {
 
   return (
     <Container>
-       <Button href='/add-reports' className='btn-primary mb-3'>ADD REPORTS</Button>
+      <div className='table_header'>
+        <h1>Reports</h1>
+        <Button variant='outline-dark' href='/add-reports'>ADD REPORTS</Button>
+      </div>
+
       <Form.Group controlId="search" className='mb-3'>
         <Form.Control
           type="text"

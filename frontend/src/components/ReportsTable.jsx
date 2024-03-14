@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom'; // Import Link for navigation
+import { AiFillDelete } from "react-icons/ai";
 
 const ReportsTable = ({ reports, deleteReport }) => {
   const [showModal, setShowModal] = useState(false);
@@ -22,7 +23,7 @@ const ReportsTable = ({ reports, deleteReport }) => {
 
   return (
     <>
-      <Table striped bordered hover>
+      <Table striped bordered hover responsive>
         <thead>
           <tr>
             <th>Module Number</th>
@@ -44,8 +45,8 @@ const ReportsTable = ({ reports, deleteReport }) => {
               <td>{report.routes}</td>
               <td>{report.directory}</td>
               <td>
-                <Link to={`/reports/${report._id}`} className="btn btn-primary mr-2">View</Link>{" "}
-                <Button variant="danger" onClick={() => handleShowModal(report._id)}>Delete</Button>
+                <Link to={`/reports/${report._id}`} className="btn btn-outline-dark">View</Link>{" "}
+                <Button variant='danger' className='delete_btn' onClick={() => handleShowModal(report._id)}><AiFillDelete/></Button>
               </td>
             </tr>
           ))}

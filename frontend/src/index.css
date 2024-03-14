@@ -54,3 +54,33 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.header__race_logo {
+  width: 400px;
+}
+
+.table_header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.delete_btn{
+  padding: 5px 10px 10px 10px !important;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+}

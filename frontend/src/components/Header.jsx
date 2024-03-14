@@ -1,10 +1,15 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Container } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
     return (
         <>
-            Header
+            <header>
+            <Link to='/'>
+                <img src='./RI Logo.svg' className='header__race_logo' />
+                </Link>
+            </header>
         </>
     )
 }

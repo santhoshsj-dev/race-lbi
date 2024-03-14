@@ -46,7 +46,7 @@ const AddReportsPage = () => {
                     surveyYear: '',
                     client: '',
                     enduser: '',
-                    directory: '' 
+                    directory: ''
                 });
             })
             .catch(error => {
@@ -70,13 +70,13 @@ const AddReportsPage = () => {
                     <Col md={6}>
                         <Form.Group controlId="moduleNumber">
                             <Form.Label>Module Number</Form.Label>
-                            <Form.Control type="text" name="moduleNumber" value={formData.moduleNumber} onChange={handleChange} placeholder="Enter module number" />
+                            <Form.Control type="text" name="moduleNumber" value={formData.moduleNumber} onChange={handleChange} placeholder="Enter module number" required />
                         </Form.Group>
                     </Col>
                     <Col md={6}>
                         <Form.Group controlId="title">
                             <Form.Label>Title</Form.Label>
-                            <Form.Control type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Enter title" />
+                            <Form.Control type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Enter title" required />
                         </Form.Group>
                     </Col>
                 </Row>
@@ -84,13 +84,13 @@ const AddReportsPage = () => {
                     <Col md={6}>
                         <Form.Group controlId="startingPointName">
                             <Form.Label>Starting Point Name</Form.Label>
-                            <Form.Control type="text" name="startingPointName" value={formData.startingPointName} onChange={handleChange} placeholder="Enter starting point name" />
+                            <Form.Control type="text" name="startingPointName" value={formData.startingPointName} onChange={handleChange} placeholder="Enter starting point name" required />
                         </Form.Group>
                     </Col>
                     <Col md={6}>
                         <Form.Group controlId="endingPointName">
                             <Form.Label>Ending Point Name</Form.Label>
-                            <Form.Control type="text" name="endingPointName" value={formData.endingPointName} onChange={handleChange} placeholder="Enter ending point name" />
+                            <Form.Control type="text" name="endingPointName" value={formData.endingPointName} onChange={handleChange} placeholder="Enter ending point name" required />
                         </Form.Group>
                     </Col>
                 </Row>
@@ -98,20 +98,20 @@ const AddReportsPage = () => {
                     <Col md={6}>
                         <Form.Group controlId="startingPointNE">
                             <Form.Label>Starting Point NE</Form.Label>
-                            <Form.Control type="text" name="startingPointNE" value={formData.startingPointNE} onChange={handleChange} placeholder="Enter starting point NE" />
+                            <Form.Control type="text" name="startingPointNE" value={formData.startingPointNE} onChange={handleChange} placeholder="Enter starting point NE" required />
                         </Form.Group>
                     </Col>
                     <Col md={6}>
                         <Form.Group controlId="endingPointNE">
                             <Form.Label>Ending Point NE</Form.Label>
-                            <Form.Control type="text" name="endingPointNE" value={formData.endingPointNE} onChange={handleChange} placeholder="Enter ending point NE" />
+                            <Form.Control type="text" name="endingPointNE" value={formData.endingPointNE} onChange={handleChange} placeholder="Enter ending point NE" required />
                         </Form.Group>
                     </Col>
                 </Row>
 
                 <Form.Group controlId="routes">
                     <Form.Label>Routes</Form.Label>
-                    <Form.Control type="text" name="routes" value={formData.routes} onChange={handleChange} placeholder="Enter routes" />
+                    <Form.Control type="text" name="routes" value={formData.routes} onChange={handleChange} placeholder="Enter routes" required />
                 </Form.Group>
 
                 <Form.Group controlId="recommendations">
@@ -129,38 +129,38 @@ const AddReportsPage = () => {
                     <Col>
                         <Form.Group controlId="surveyMonth">
                             <Form.Label>Survey Month</Form.Label>
-                            <Form.Control type="text" name="surveyMonth" value={formData.surveyMonth} onChange={handleChange} placeholder="Enter survey month" />
+                            <Form.Control type="text" name="surveyMonth" value={formData.surveyMonth} onChange={handleChange} placeholder="Enter survey month" required />
                         </Form.Group>
                     </Col><Col>
                         <Form.Group controlId="surveyYear">
                             <Form.Label>Survey Year</Form.Label>
-                            <Form.Control type="text" name="surveyYear" value={formData.surveyYear} onChange={handleChange} placeholder="Enter survey year" />
+                            <Form.Control type="text" name="surveyYear" value={formData.surveyYear} onChange={handleChange} placeholder="Enter survey year" required />
                         </Form.Group>
                     </Col><Col>
                         <Form.Group controlId="client">
                             <Form.Label>Client</Form.Label>
-                            <Form.Control type="text" name="client" value={formData.client} onChange={handleChange} placeholder="Enter client" />
+                            <Form.Control type="text" name="client" value={formData.client} onChange={handleChange} placeholder="Enter client" required />
                         </Form.Group>
                     </Col><Col>
                         <Form.Group controlId="enduser">
                             <Form.Label>End User</Form.Label>
-                            <Form.Control type="text" name="enduser" value={formData.enduser} onChange={handleChange} placeholder="Enter end user" />
+                            <Form.Control type="text" name="enduser" value={formData.enduser} onChange={handleChange} placeholder="Enter end user" required />
                         </Form.Group>
                     </Col>
                 </Row>
 
                 <Form.Group controlId="directory">
                     <Form.Label>Directory</Form.Label>
-                    <Form.Control type="text" name="directory" value={formData.directory} onChange={handleChange} placeholder="Enter Directory" />
+                    <Form.Control type="text" name="directory" value={formData.directory} onChange={handleChange} placeholder="Enter Directory" required />
                 </Form.Group>
 
                 <Form.Group controlId="startingPointLink" hidden>
                     <Form.Label>Starting Point Link</Form.Label>
-                    <Form.Control type="text" name="startingPointLink" value={formData.startingPointLink} onChange={handleChange} placeholder="Enter starting point link" />
+                    <Form.Control type="text" name="startingPointLink" value={formData.startingPointLink} onChange={handleChange} placeholder="Enter starting point link" required />
                 </Form.Group>
                 <Form.Group controlId="endingPointLink" hidden>
                     <Form.Label>Ending Point Link</Form.Label>
-                    <Form.Control type="text" name="endingPointLink" value={formData.endingPointLink} onChange={handleChange} placeholder="Enter ending point link" />
+                    <Form.Control type="text" name="endingPointLink" value={formData.endingPointLink} onChange={handleChange} placeholder="Enter ending point link" required />
                 </Form.Group>
 
                 <Button className='mt-3' variant="primary" type="submit">
