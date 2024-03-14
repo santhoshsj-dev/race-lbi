@@ -1,53 +1,72 @@
-// ReportsTable.jsx
-import React from 'react';
-import { Table, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Table, Button, Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom'; // Import Link for navigation
 
 const ReportsTable = ({ reports, deleteReport }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [reportIdToDelete, setReportIdToDelete] = useState(null);
+
+  const handleDelete = () => {
+    deleteReport(reportIdToDelete);
+    setShowModal(false);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleShowModal = (reportId) => {
+    setReportIdToDelete(reportId);
+    setShowModal(true);
+  };
+
   return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>Module Number</th>
-          <th>Starting Point NE</th>
-          <th>Starting Point Name</th>
-          <th>Starting Point Link</th>
-          <th>Ending Point NE</th>
-          <th>Ending Point Name</th>
-          <th>Ending Point Link</th>
-          <th>Title</th>
-          <th>Routes</th>
-          <th>Recommendations</th>
-          <th>Survey Month</th>
-          <th>Survey Year</th>
-          <th>Client</th>
-          <th>End User</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {Array.isArray(reports) && reports.map(report => (
-          <tr key={report._id}>
-            <td>{report.moduleNumber}</td>
-            <td>{report.startingPointNE}</td>
-            <td>{report.startingPointName}</td>
-            <td>{report.startingPointLink}</td>
-            <td>{report.endingPointNE}</td>
-            <td>{report.endingPointName}</td>
-            <td>{report.endingPointLink}</td>
-            <td>{report.title}</td>
-            <td>{report.routes}</td>
-            <td>{report.recommendations}</td>
-            <td>{report.surveyMonth}</td>
-            <td>{report.surveyYear}</td>
-            <td>{report.client}</td>
-            <td>{report.enduser}</td>
-            <td>
-              <Button variant="danger" onClick={() => deleteReport(report._id)}>Delete</Button>
-            </td>
+    <>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Module Number</th>
+            <th>Starting Point NE</th>
+            <th>Ending Point NE</th>
+            <th>Title</th>
+            <th>Routes</th>
+            <th>Directory</th>
+            <th>Actions</th>
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {Array.isArray(reports) && reports.map(report => (
+            <tr key={report._id}>
+              <td>{report.moduleNumber}</td>
+              <td>{report.startingPointNE}</td>
+              <td>{report.endingPointNE}</td>
+              <td>{report.title}</td>
+              <td>{report.routes}</td>
+              <td>{report.directory}</td>
+              <td>
+                <Link to={`/reports/${report._id}`} className="btn btn-primary mr-2">View</Link>{" "}
+                <Button variant="danger" onClick={() => handleShowModal(report._id)}>Delete</Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this report?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
 

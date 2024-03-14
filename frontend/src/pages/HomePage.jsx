@@ -1,16 +1,15 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container } from 'react-bootstrap';
-import ReportsForm from '../components/ReportsForm';
+import { Container, Form, Button } from 'react-bootstrap';
 import ReportsTable from '../components/ReportsTable';
 
 function HomePage() {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    axios.get('https://race-lbi.onrender.com/api/reports')
+    axios.get(import.meta.env.VITE_BACKEND_URL+`api/reports`)
       .then(res => {
         setReports(res.data);
         setLoading(false);
@@ -21,30 +20,45 @@ function HomePage() {
       });
   }, []);
 
-  const addReport = formData => {
-    axios.post('https://race-lbi.onrender.com/api/reports', formData)
-      .then(res => {
-        setReports([...reports, res.data]);
-      })
-      .catch(err => console.error(err));
-  };
-
   const deleteReport = id => {
-    axios.delete(`https://race-lbi.onrender.com/api/reports/${id}`)
+    axios.delete(import.meta.env.VITE_BACKEND_URL + `api/reports/${id}`)
       .then(() => setReports(reports.filter(report => report._id !== id)))
       .catch(err => console.error(err));
   };
+
+  const handleSearch = e => {
+    setSearchQuery(e.target.value);
+  };
+
+  // Filter reports based on search query
+  const filteredReports = reports.filter(report => {
+    return (
+      report.moduleNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      report.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      report.routes.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      report.surveyMonth.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      report.surveyYear.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      report.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      report.enduser.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  console.log(import.meta.env.VITE_TEST_VAR) // "123"
-
   return (
     <Container>
-      <ReportsForm addReport={addReport} />
-      <ReportsTable reports={reports} deleteReport={deleteReport} />
+       <Button href='/add-reports' className='btn-primary mb-3'>ADD REPORTS</Button>
+      <Form.Group controlId="search" className='mb-3'>
+        <Form.Control
+          type="text"
+          placeholder="Search reports..."
+          value={searchQuery}
+          onChange={handleSearch}
+        />
+      </Form.Group>
+      <ReportsTable reports={filteredReports} deleteReport={deleteReport} />
     </Container>
   );
 }

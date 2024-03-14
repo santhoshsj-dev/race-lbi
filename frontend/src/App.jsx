@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
+import AddReportsPage from './pages/AddReportsPage';
+import ViewSingleReportPage from './pages/ViewSingleReportPage';
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
           <Header />
           <Routes>
             <Route path='/' element={<HomePage />} exact />
+            <Route path='/add-reports' element={<AddReportsPage />} />
+            <Route path="/reports/:id" element={<ViewSingleReportPage />} />
           </Routes>
         </div>
       </BrowserRouter>
