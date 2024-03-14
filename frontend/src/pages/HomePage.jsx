@@ -10,7 +10,7 @@ function HomePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/reports')
+    axios.get('https://race-lbi.onrender.com/api/reports')
       .then(res => {
         setReports(res.data);
         setLoading(false);
@@ -22,7 +22,7 @@ function HomePage() {
   }, []);
 
   const addReport = formData => {
-    axios.post('http://localhost:5000/api/reports', formData)
+    axios.post('https://race-lbi.onrender.com/api/reports', formData)
       .then(res => {
         setReports([...reports, res.data]);
       })
@@ -30,7 +30,7 @@ function HomePage() {
   };
 
   const deleteReport = id => {
-    axios.delete(`http://localhost:5000/api/reports/${id}`)
+    axios.delete(`https://race-lbi.onrender.com/api/reports/${id}`)
       .then(() => setReports(reports.filter(report => report._id !== id)))
       .catch(err => console.error(err));
   };
