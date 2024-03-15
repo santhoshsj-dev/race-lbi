@@ -33,7 +33,7 @@ const ViewSingleReportPage = () => {
     <Container>
       <Row>
         <Col md={12} className='d-flex justify-content-between align-content-center'>
-          <h1 className="mt-4">Add Report</h1>
+          <h1 className="mt-4">View Report</h1>
           <span>
             <Button href='/'>Back</Button>
           </span>
@@ -54,6 +54,24 @@ const ViewSingleReportPage = () => {
       <p>Client: {report.client}</p>
       <p>End User: {report.enduser}</p>
       <p>Directory: {report.directory}</p>
+      <p>Map Image Url: {report.mapImgUrl}</p>
+
+      <h3>Other NE Points:</h3>
+      {report.otherNEPoints.map((point, index) => (
+        <div key={index}>
+          <p>Point Name: {point.pointName}</p>
+          <p>Point NE: {point.pointNE}</p>
+          <p>Point Link: {point.pointLink}</p>
+        </div>
+      ))}
+
+      {/* Display map image */}
+      {report.mapImgUrl && (
+        <div>
+          <h3>Map Image:</h3>
+          <img src={report.mapImgUrl} alt="Map" style={{ maxWidth: '100%' }} />
+        </div>
+      )}
     </Container>
   );
 };

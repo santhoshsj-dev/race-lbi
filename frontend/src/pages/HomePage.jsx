@@ -30,18 +30,19 @@ function HomePage() {
     setSearchQuery(e.target.value);
   };
 
-  // Filter reports based on search query
   const filteredReports = reports.filter(report => {
     return (
-      report.moduleNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      report.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      report.routes.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      report.surveyMonth.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      report.surveyYear.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      report.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      report.enduser.toLowerCase().includes(searchQuery.toLowerCase())
+      (report.moduleNumber && report.moduleNumber.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (report.title && report.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (report.routes && report.routes.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (report.surveyMonth && report.surveyMonth.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (report.surveyYear && report.surveyYear.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (report.client && report.client.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (report.enduser && report.enduser.toLowerCase().includes(searchQuery.toLowerCase()))
     );
   });
+  
+  
 
   if (loading) {
     return <div>Loading...</div>;

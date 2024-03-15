@@ -28,16 +28,20 @@ const reportSchema = new mongoose.Schema({
     endingPointName: String,
     endingPointLink: String,
     title: String,
-    routes: String,
     recommendations: String,
     surveyMonth: String,
     surveyYear: String,
     client: String,
     enduser: String,
-    directory: String
+    directory: String,
+    mapImgUrl: String,
+    otherNEPoints: [{
+        pointName: String,
+        pointNE: String,
+        pointLink: String
+    }]
 });
 
-// Define Model
 const Report = mongoose.model('Report', reportSchema);
 
 // Routes
@@ -63,15 +67,15 @@ app.get('/api/reports/:id', async (req, res) => {
 });
 
 app.post('/api/reports', async (req, res) => {
-    const report = new Report(req.body); // Ensure that the req.body contains the directory field
     try {
+        const formData = req.body;
+        const report = new Report(formData);
         const newReport = await report.save();
         res.status(201).json(newReport);
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
 });
-
 
 app.put('/api/reports/:id', async (req, res) => {
     try {

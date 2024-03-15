@@ -66,6 +66,13 @@ header {
   width: 400px;
 }
 
+.add_reports_input{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
 .table_header{
   display: flex;
   justify-content: space-between;
