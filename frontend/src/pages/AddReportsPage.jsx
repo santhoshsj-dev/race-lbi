@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 
+import { MdMyLocation } from 'react-icons/md'
+
 const AddReportsPage = () => {
     const [formData, setFormData] = useState({
         moduleNumber: '',
@@ -22,12 +24,94 @@ const AddReportsPage = () => {
         directory: ''
     });
 
-    const handleChange = e => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        // If the changed field is pdfUrl or docUrl, process the URL
+        if (name === 'pdfUrl' || name === 'docUrl') {
+            const extractUrl = () => {
+                const regex = /src="([^"]+)"/;
+                const match = value.match(regex);
+                if (match && match.length > 1) {
+                    const originalUrl = match[1];
+                    // Replace the word "embed" with "download"
+                    const modifiedUrl = originalUrl.replace("embed", "download");
+                    // Set the modified URL to the corresponding state
+                    setFormData(prevData => ({
+                        ...prevData,
+                        [name]: modifiedUrl
+                    }));
+                } else {
+                    alert('Invalid URL format');
+                }
+            };
+
+            extractUrl();
+        } else {
+            // For other fields, update the form data as usual
+            setFormData(prevData => ({
+                ...prevData,
+                [name]: value
+            }));
+
+            // If either startingPointName or endingPointName changes, concatenate them and set as title
+            if (name === 'startingPointName' || name === 'endingPointName') {
+                setFormData(prevData => ({
+                    ...prevData,
+                    title: `${prevData.startingPointName} to ${prevData.endingPointName}`
+                }));
+            }
+
+            // If the changed field is startingPointNE or endingPointNE, update the corresponding link
+            if (name === 'startingPointNE' || name === 'endingPointNE') {
+                setFormData(prevData => ({
+                    ...prevData,
+                    [name === 'startingPointNE' ? 'startingPointLink' : 'endingPointLink']: generateGoogleMapsLink(value)
+                }));
+            }
+        }
+    };
+
+    // Function to generate Google Maps link based on coordinates
+    const generateGoogleMapsLink = (coordinates) => {
+        // Extract latitude and longitude values
+        const regex = /N(\d+) (\d+\.\d+) E(\d+) (\d+\.\d+)/;
+        const match = coordinates.match(regex);
+
+        if (!match) {
+            return 'Invalid coordinates';
+        }
+
+        const [, latDegrees, latMinutes, lngDegrees, lngMinutes] = match;
+        // Convert degrees and minutes to decimal degrees
+        const lat = parseFloat(latDegrees) + parseFloat(latMinutes) / 60;
+        const lng = parseFloat(lngDegrees) + parseFloat(lngMinutes) / 60;
+        // Construct the Google Maps link
+        return `https://www.google.com/maps?q=${lat},${lng}`;
+    };
+
+    // Generate options for months (JAN to DEC)
+    const months = Array.from({ length: 12 }, (_, i) => {
+        const monthIndex = i + 1;
+        const month = monthIndex < 10 ? `0${monthIndex}` : monthIndex.toString();
+        return <option key={month} value={month}>{new Date(2000, i).toLocaleString('default', { month: 'long' })}</option>;
+    });
+
+    // Generate options for years (2015 to 2024)
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: 10 }, (_, i) => {
+        const year = currentYear - i;
+        return <option key={year} value={year}>{year}</option>;
+    });
+
+    // Function to handle opening the URL in a new tab/window
+    const openUrl = (url) => {
+        window.open(url, '_blank');
     };
 
     const handleSubmit = e => {
         e.preventDefault();
+
         axios.post(import.meta.env.VITE_BACKEND_URL + `api/reports`, formData)
             .then(() => {
                 toast.success('Report added successfully!');
@@ -97,14 +181,32 @@ const AddReportsPage = () => {
                 <Row>
                     <Col md={6}>
                         <Form.Group controlId="startingPointNE">
-                            <Form.Label>Starting Point NE</Form.Label>
-                            <Form.Control type="text" name="startingPointNE" value={formData.startingPointNE} onChange={handleChange} placeholder="Enter starting point NE" required />
+                            <Form.Label>Starting Point NE:</Form.Label>
+                            <div className='add_reports_input'>
+                                <Form.Control type="text" name="startingPointNE" value={formData.startingPointNE} onChange={handleChange} required />
+                                <Button
+                                    variant="primary"
+                                    onClick={() => openUrl(formData.startingPointLink)}
+                                    disabled={formData.startingPointLink === "Invalid coordinates" || formData.startingPointNE.trim() === ""}
+                                >
+                                    <MdMyLocation />
+                                </Button>
+                            </div>
                         </Form.Group>
                     </Col>
                     <Col md={6}>
                         <Form.Group controlId="endingPointNE">
-                            <Form.Label>Ending Point NE</Form.Label>
-                            <Form.Control type="text" name="endingPointNE" value={formData.endingPointNE} onChange={handleChange} placeholder="Enter ending point NE" required />
+                            <Form.Label>Ending Point NE:</Form.Label>
+                            <div className='add_reports_input'>
+                                <Form.Control type="text" name="endingPointNE" value={formData.endingPointNE} onChange={handleChange} required />
+                                <Button
+                                    variant="primary"
+                                    onClick={() => openUrl(formData.endingPointLink)}
+                                    disabled={formData.endingPointLink === "Invalid coordinates" || formData.endingPointNE.trim() === ""}
+                                >
+                                    <MdMyLocation />
+                                </Button>
+                            </div>
                         </Form.Group>
                     </Col>
                 </Row>
@@ -129,9 +231,24 @@ const AddReportsPage = () => {
                     <Col>
                         <Form.Group controlId="surveyMonth">
                             <Form.Label>Survey Month</Form.Label>
-                            <Form.Control type="text" name="surveyMonth" value={formData.surveyMonth} onChange={handleChange} placeholder="Enter survey month" required />
+                            <Form.Select name="surveyMonth" value={formData.surveyMonth} onChange={handleChange} aria-label="Select survey month" required>
+                                <option value="">Select survey month</option>
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
+                            </Form.Select>
                         </Form.Group>
-                    </Col><Col>
+                    </Col>
+                    <Col>
                         <Form.Group controlId="surveyYear">
                             <Form.Label>Survey Year</Form.Label>
                             <Form.Control type="text" name="surveyYear" value={formData.surveyYear} onChange={handleChange} placeholder="Enter survey year" required />
