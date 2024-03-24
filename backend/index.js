@@ -39,8 +39,11 @@ const reportSchema = new mongoose.Schema({
         pointName: String,
         pointNE: String,
         pointLink: String
-    }]
+    }],
+    createdAt: { type: Date, default: Date.now }, // Automatically set to the current date when a new document is created
+    updatedAt: { type: Date, default: Date.now } // Automatically updated to the current date when a document is modified
 });
+
 
 const Report = mongoose.model('Report', reportSchema);
 

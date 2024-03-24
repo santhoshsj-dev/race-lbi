@@ -66,21 +66,43 @@ header {
   width: 400px;
 }
 
-.add_reports_input{
+.add_reports_input {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
 }
 
-.table_header{
+.table_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.delete_btn{
+.dark-pagination .page-link {
+  color: #343a40; /* Text color */
+  border-color: #343a40; /* Border color */
+}
+
+.dark-pagination .page-link:hover {
+  color: #fff; /* Text color on hover */
+  background-color: #23272b; /* Background color on hover */
+  border-color: #1d2124; /* Border color on hover */
+}
+
+.dark-pagination .page-link:focus {
+  box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5); /* Focus style */
+}
+
+.dark-pagination .page-item.active .page-link {
+  z-index: 1;
+  color: #fff; /* Active text color */
+  background-color: #23272b; /* Active background color */
+  border-color: #1d2124; /* Active border color */
+}
+
+.delete_btn {
   padding: 5px 10px 10px 10px !important;
 }
 
