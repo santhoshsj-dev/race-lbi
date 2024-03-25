@@ -47,7 +47,6 @@ const ViewSingleReportPage = () => {
       <p>Ending Point Name: {report.endingPointName}</p>
       <p>Ending Point Link: {report.endingPointLink}</p>
       <p>Title: {report.title}</p>
-      <p>Routes: {report.routes}</p>
       <p>Recommendations: {report.recommendations}</p>
       <p>Survey Month: {report.surveyMonth}</p>
       <p>Survey Year: {report.surveyYear}</p>

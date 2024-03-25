@@ -29,20 +29,20 @@ function HomePage() {
   const handleSearch = e => {
     setSearchQuery(e.target.value);
   };
-
   const filteredReports = reports.filter(report => {
     return (
       (report.moduleNumber && report.moduleNumber.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (report.startingPointName && report.startingPointName.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (report.endingPointName && report.endingPointName.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (report.title && report.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (report.routes && report.routes.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (report.recommendations && report.recommendations.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (report.surveyMonth && report.surveyMonth.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (report.surveyYear && report.surveyYear.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (report.client && report.client.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (report.enduser && report.enduser.toLowerCase().includes(searchQuery.toLowerCase()))
+      (report.enduser && report.enduser.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (report.directory && report.directory.toLowerCase().includes(searchQuery.toLowerCase()))
     );
-  });
-  
-  
+  });  
 
   if (loading) {
     return <div>Loading...</div>;
